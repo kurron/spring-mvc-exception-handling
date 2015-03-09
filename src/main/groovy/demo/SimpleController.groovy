@@ -13,25 +13,18 @@ class SimpleController {
 
     @RequestMapping( value = '/{id}', method = RequestMethod.GET )
     ResponseEntity<String> handleGet( @PathVariable( 'id' ) String id ) {
-        ResponseEntity<String> responseEntity
         if ( id.toLowerCase().contains( 'fail' ) ) {
-            responseEntity = new ResponseEntity<String>( 'GET forced to fail', HttpStatus.INTERNAL_SERVER_ERROR )
+            throw new RuntimeException( 'Forced to fail!')
         }
-        else {
-            responseEntity = new ResponseEntity<String>( 'GET successful', HttpStatus.OK )
-        }
-        responseEntity
+
+        new ResponseEntity<String>( 'GET successful', HttpStatus.OK )
     }
 
     @RequestMapping( method = RequestMethod.POST )
     ResponseEntity<String> handlePost( @RequestBody String payload ) {
-        ResponseEntity<String> responseEntity
         if ( payload.toLowerCase().contains( 'fail' ) ) {
-            responseEntity = new ResponseEntity<String>( 'POST forced to fail', HttpStatus.INTERNAL_SERVER_ERROR )
+            throw new RuntimeException( 'Forced to fail!')
         }
-        else {
-            responseEntity = new ResponseEntity<String>( 'POST successful', HttpStatus.CREATED )
-        }
-        responseEntity
+        new ResponseEntity<String>( 'POST successful', HttpStatus.CREATED )
     }
 }
