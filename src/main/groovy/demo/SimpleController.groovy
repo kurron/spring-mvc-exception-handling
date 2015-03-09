@@ -24,7 +24,14 @@ class SimpleController {
     }
 
     @RequestMapping( method = RequestMethod.POST )
-    ResponseEntity<String> handlePost( @RequestBody byte[] payload ) {
-        new ResponseEntity<String>( 'POST successful', HttpStatus.CREATED )
+    ResponseEntity<String> handlePost( @RequestBody String payload ) {
+        ResponseEntity<String> responseEntity
+        if ( payload.toLowerCase().contains( 'fail' ) ) {
+            responseEntity = new ResponseEntity<String>( 'POST forced to fail', HttpStatus.INTERNAL_SERVER_ERROR )
+        }
+        else {
+            responseEntity = new ResponseEntity<String>( 'POST successful', HttpStatus.CREATED )
+        }
+        responseEntity
     }
 }
